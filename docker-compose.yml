@@ -1,5 +1,5 @@
 version: '3'
-services: 
+services:
   productapp:
     build: .
     volumes:
@@ -7,6 +7,8 @@ services:
     depends_on:
       - productapp-mysql
       - productapp-redis
+    ports:
+      - "9000:80"
 
   productapp-mysql:
     image: mysql:5.7.22
@@ -20,11 +22,11 @@ services:
       MYSQL_DATABASE: productapp
       MYSQL_ROOT_PASSWORD: root
 
-  productapp-nginx: 
+  productapp-nginx:
       build: ./.docker/nginx
       restart: always
       ports:
-        - "8001:80"
+        - "8001:8001"
       volumes:
         - ./:/var/www
       depends_on:
